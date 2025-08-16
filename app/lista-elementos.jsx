@@ -1,21 +1,24 @@
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Image } from 'react-native';
 import { Text, TextInput, Button, Card } from 'react-native-paper';
-import { useState } from 'react';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useState, useEffect } from 'react';
+import { router } from 'expo-router';
+import elementos from '../data/elementos.json'; // aquí va tu JSON
 
 export default function ListaPantalla() {
   const [busqueda, setBusqueda] = useState('');
+  const [filtrados, setFiltrados] = useState(elementos);
 
-  const data = [
-    { id: 1, titulo: 'Item uno' },
-    { id: 2, titulo: 'Item dos' },
-    { id: 3, titulo: 'Item tres' },
-    { id: 4, titulo: 'Item cuatro' }
-  ];
-
-  const filtrar = data.filter(item =>
-    item.titulo.toLowerCase().includes(busqueda.toLowerCase())
-  );
+  useEffect(() => {
+    if (busqueda.trim() === '') {
+      setFiltrados(elementos);
+    } else {
+      setFiltrados(
+        elementos.filter(item =>
+          item.titulo.toLowerCase().includes(busqueda.toLowerCase())
+        )
+      );
+    }
+  }, [busqueda]);
 
   return (
     <ScrollView contentContainerStyle={{ padding: 20, backgroundColor: 'white' }}>
@@ -23,6 +26,7 @@ export default function ListaPantalla() {
         Lista
       </Text>
 
+      {/* Campo de búsqueda */}
       <TextInput
         placeholder="Buscar"
         value={busqueda}
@@ -32,24 +36,43 @@ export default function ListaPantalla() {
         style={{ marginBottom: 20 }}
       />
 
-      {filtrar.map(item => (
+      {/* Lista de elementos */}
+      {filtrados.map(item => (
         <Card key={item.id} style={{ marginBottom: 15 }}>
           <Card.Content style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <MaterialCommunityIcons
-              name="image-outline"
-              size={40}
-              color="#3B82F6"
-              style={{ marginRight: 15 }}
+            <Image
+              source={{ uri: item.urlImagen }}
+              style={{ width: 50, height: 50, borderRadius: 8, marginRight: 15 }}
+              
             />
             <View style={{ flex: 1 }}>
               <Text variant="titleMedium" style={{ fontWeight: 'bold' }}>
                 {item.titulo}
               </Text>
               <Text variant="bodySmall" style={{ color: '#555' }}>
-                Descripción del elemento. Lorem ipsum dolor sit amet.
+                {item.descripcion.length > 30 && !item.mostrarTodo
+                  ? item.descripcion.substring(0, 30) + '...'
+                  : item.descripcion}
               </Text>
+
+              {/* Ver más / Ver menos */}
+              <Button
+                compact
+                onPress={() => {
+                  item.mostrarTodo = !item.mostrarTodo;
+                  setFiltrados([...filtrados]);
+                }}
+              >
+                {item.mostrarTodo ? 'Ver menos' : 'Ver más'}
+              </Button>
             </View>
-            <Button mode="contained" buttonColor="#3B82F6">
+
+            {/* Botón de acción */}
+            <Button
+              mode="contained"
+              buttonColor="#3B82F6"
+              onPress={() => router.push(`/detalle-elemento?id=${item.id}`)}
+            >
               Acción
             </Button>
           </Card.Content>

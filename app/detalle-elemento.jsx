@@ -1,34 +1,47 @@
 import { View, Image } from 'react-native';
 import { Text, Button } from 'react-native-paper';
-import { Stack } from 'expo-router';
+import { Stack, useLocalSearchParams } from 'expo-router';
+import elementos from '../data/elementos.json';
 
 export default function DetalleElemento() {
+  const { id } = useLocalSearchParams(); 
+  const elemento = elementos.find(e => e.id === parseInt(id));
+
+  if (!elemento) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>No se encontró el elemento</Text>
+      </View>
+    );
+  }
+
   return (
     <>
-      <Stack.Screen options={{ title: 'Detalle de Elementos' }} />
+      <Stack.Screen options={{ title: 'Detalle de Elemento' }} />
+
       <View style={{ flex: 1, padding: 20, backgroundColor: '#fff' }}>
         <Image
-          source={require('../img/detalles.png')}
+          source={{ uri: elemento.urlImagen }}
           style={{ width: '100%', height: 200, marginBottom: 40, borderRadius: 12 }}
-          resizeMode="cover"
+          resizeMode="contain"
         />
 
         <Text
           variant="titleLarge"
-          style={{ fontWeight: 'bold', fontSize: 36, marginBottom: 15 }}
+          style={{ fontWeight: 'bold', fontSize: 32, marginBottom: 15 }}
         >
-          Elemento uno
+          {elemento.titulo}
         </Text>
 
         <Text
           variant="titleMedium"
-          style={{ fontSize: 30, marginBottom: 12 }}
+          style={{ fontSize: 24, marginBottom: 12 }}
         >
-          $29,99
+          {elemento.precio ? `$${elemento.precio}` : 'Sin precio'}
         </Text>
 
-        <Text style={{ marginBottom: 20, textAlign: 'left', fontSize:25, lineHeight: 22 }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        <Text style={{ marginBottom: 20, textAlign: 'left', fontSize: 18, lineHeight: 24 }}>
+          {elemento.descripcion}
         </Text>
 
         <View style={{ marginTop: 'auto' }}>

@@ -1,0 +1,20 @@
+[
+  {
+    "titulo": "Matemáticas Básicas",
+    "descripcion": "Curso introductorio a las matemáticas con ejemplos y ejercicios prácticos.",
+    "urlImagen": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhmkYrGiSTQn6X1Vnu9WrQ64vtukQeBHcSUWYF4LyqJEWLqqIb3MuvS4IwiQ0XQDI05yrI_J3NTkmn-OistYPUlZVvKHrjy2n24OyDXk3hT7OCjDw2Oz_zZzi99Txsi83V2AhB1361hANkX/s1600/MATEM%C3%81TICAS+BASICA.jpg",
+    "mostrarTodo": false
+  },
+  {
+    "titulo": "Programación en React Native",
+    "descripcion": "Aprende a desarrollar aplicaciones móviles con React Native, Expo y librerías modernas.",
+    "urlImagen": "https://www.syntonize.com/wp-content/uploads/2023/09/AB33F374-B5C0-46B9-8880-EB6694F31B1E.png",
+    "mostrarTodo": false
+  },
+  {
+    "titulo": "Física Aplicada",
+    "descripcion": "Explicación de los conceptos fundamentales de la física con experimentos y problemas resueltos.",
+    "urlImagen": "https://www.shutterstock.com/image-vector/massenergy-equivalence-260nw-390594751.jpg",
+    "mostrarTodo": false
+  }
+]

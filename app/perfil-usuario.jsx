@@ -1,48 +1,30 @@
-import { View, Image } from 'react-native';
+import { View } from 'react-native';
 import { Text, Button, List, Surface } from 'react-native-paper';
-import { Stack } from 'expo-router';
+import { Stack, useLocalSearchParams } from 'expo-router';
 
 export default function PerfilUsuario() {
+  const { nombre, email, telefono, direccion, rol } = useLocalSearchParams();
+
   return (
     <>
       <Stack.Screen options={{ title: 'Perfil de Usuario' }} />
-      <View style={{ flex: 1, padding: 20, alignItems: 'center' }}>
-        <Image
-          source={require('../img/Juan.jpg')}
-          style={{
-            width: 300,
-            height: 300,
-            borderRadius: 150,
-            marginBottom: 20,
-          }}
-        />
-        <Text variant="titleLarge">John Doe</Text>
-        <Text variant="bodyMedium" style={{ marginBottom: 20 }}>
-          juan.renteria638@utch.edu.co
-        </Text>
+      <View style={{ flex: 1, padding: 20 }}>
+        <View style={{ alignItems: 'center', marginBottom: 20 }}>
+          <Text style={{ fontSize: 60 }}>👤</Text>
+          <Text variant="titleLarge">{nombre}</Text>
+          <Text variant="bodyMedium">{email}</Text>
+        </View>
 
         <View style={{ width: '100%' }}>
-          {[
-            { title: 'Editar perfil', icon: 'account-edit' },
-            { title: 'Notificaciones', icon: 'bell' },
-            { title: 'Configuración', icon: 'cog' },
-            { title: 'Ayuda', icon: 'help-circle' },
-          ].map((item, index) => (
-            <Surface
-              key={index}
-              style={{
-                marginBottom: 10,
-                borderRadius: 10,
-                elevation: 2,
-                backgroundColor: '#fff',
-              }}
-            >
-              <List.Item
-                title={item.title}
-                left={(props) => <List.Icon {...props} icon={item.icon} />}
-              />
-            </Surface>
-          ))}
+          <Surface style={{ marginBottom: 10, borderRadius: 10, elevation: 2 }}>
+            <List.Item title={`📱 Teléfono: ${telefono}`} />
+          </Surface>
+          <Surface style={{ marginBottom: 10, borderRadius: 10, elevation: 2 }}>
+            <List.Item title={`🏠 Dirección: ${direccion}`} />
+          </Surface>
+          <Surface style={{ marginBottom: 10, borderRadius: 10, elevation: 2 }}>
+            <List.Item title={`👔 Rol: ${rol}`} />
+          </Surface>
         </View>
 
         <Button
